@@ -4,6 +4,8 @@ import uglify from 'rollup-plugin-uglify';
 import replace from 'rollup-plugin-replace';
 import postcss from 'rollup-plugin-postcss';
 import serve from 'rollup-plugin-serve';
+import commonjs from 'rollup-plugin-commonjs';
+import nodeResolve from 'rollup-plugin-node-resolve';
 import cssnano from 'cssnano';
 
 var isProduction = process.env.NODE_ENV === 'production';
@@ -15,14 +17,16 @@ export default {
   sourceMap: !isProduction ? 'inline' : false,
   moduleName: 'RollupBundle',
   plugins: [
+    nodeResolve(),
+    commonjs(),
     (!isProduction && serve('build')),
-    babel({
-      exclude: ['node_modules/**', 'src/styles/**']
-    }),
     eslint({
       exclude: [
         'src/styles/**',
       ]
+    }),
+    babel({
+      exclude: ['node_modules/**', 'src/styles/**']
     }),
     postcss({
       extensions: [ '.css' ],
