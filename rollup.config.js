@@ -1,6 +1,7 @@
 import babel from 'rollup-plugin-babel';
 import eslint from 'rollup-plugin-eslint';
 import uglify from 'rollup-plugin-uglify';
+import closure from 'rollup-plugin-closure-compiler-js';
 import replace from 'rollup-plugin-replace';
 import postcss from 'rollup-plugin-postcss';
 import serve from 'rollup-plugin-serve';
@@ -37,6 +38,7 @@ export default {
       ENV: JSON.stringify(process.env.NODE_ENV || 'development')
     }),
     (isProduction && uglify()),
+    (isProduction && closure())
   ]
 };
 
