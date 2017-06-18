@@ -3,6 +3,7 @@ import eslint from 'rollup-plugin-eslint';
 import uglify from 'rollup-plugin-uglify';
 import replace from 'rollup-plugin-replace';
 import postcss from 'rollup-plugin-postcss';
+import serve from 'rollup-plugin-serve';
 import cssnano from 'cssnano';
 
 var isProduction = process.env.NODE_ENV === 'production';
@@ -14,6 +15,7 @@ export default {
   sourceMap: !isProduction ? 'inline' : false,
   moduleName: 'RollupBundle',
   plugins: [
+    (!isProduction && serve('build')),
     babel({
       exclude: ['node_modules/**', 'src/styles/**']
     }),
